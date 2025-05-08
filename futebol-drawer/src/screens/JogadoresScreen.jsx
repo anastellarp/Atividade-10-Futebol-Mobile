@@ -1,34 +1,39 @@
-import React from 'react'
-import { FlatList, StyleSheet, Text } from 'react-native'
-import { Card } from 'react-native-paper'
+import React from 'react';
+import { FlatList, StyleSheet, Text, View, Image } from 'react-native';
 
-export default function JogadoresScreen(props) {
-
-  const { nome,numero,posicao,idade,imagem } = props
-
+export default function JogadoresScreen({ jogadores }) {
   return (
-    <Card style={{ margin: 10 }}>
-      <Card.Content>
-        <Text></Text>
-      </Card.Content>
-      <Card.Cover source={{ uri: imagem }} />
-      <Card.Actions>
-        <FlatList
-            data={jogadores}
-            keyExtractor={(item) => item.numero.toString()}
-            renderItem={({ item }) => (
-                <Card>
-                    <Card.Cover source={{ uri: item.imagem }} />
-                    <Card.Content>
-                        <Title>{item.nome}</Title>
-                        <Text>{item.posicao} - {item.idade} anos</Text>
-                    </Card.Content>
-                </Card>
-            )}
-        />
-      </Card.Actions>
-    </Card>
-  )
+    <View style={styles.container}>
+      <Text variant="headlineMedium">Jogadores</Text>
+      <FlatList
+        data={jogadores}
+        renderItem={({ item }) => (
+          <View style={styles.jogador}>
+            <Image source={{ uri: item.imagem }} style={styles.image} />
+            <Text>{item.nome}</Text>
+            <Text>Posição: {item.posicao}</Text>
+            <Text>Idade: {item.idade}</Text>
+            <Text>Número: {item.numero}</Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.numero.toString()}
+      />
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  jogador: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+});
